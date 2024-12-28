@@ -1,0 +1,2 @@
+# BeatSaberChzzkChatPlugin
+ChzzkChatPlugin for BeatSaber
