@@ -35,7 +35,7 @@ namespace ChzzkChat.SongRequest
 
             webClient.DownloadFileCompleted += (s, e) =>
             {
-                _ = new FileUnZip(request.SongCode);
+                new FileUnZip(request.SongCode);
             };
         }
 

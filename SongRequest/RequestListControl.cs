@@ -95,13 +95,13 @@ namespace ChzzkChat.SongRequest
                 {
                     Plugin.Log.Debug("File UnZip");
 
-                    _ = new FileUnZip(PluginConfig.Instance.RequestList[idx].SongCode);
+                    new FileUnZip(PluginConfig.Instance.RequestList[idx].SongCode);
                 }
                 else
                 {
                     Plugin.Log.Debug("File Download");
 
-                    _ = new SongDownloader(idx);
+                    new SongDownloader(idx);
                 }
             }
         }

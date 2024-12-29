@@ -2,13 +2,15 @@
 using System;
 using System.IO;
 using System.IO.Compression;
+using SongCore;
 
 namespace ChzzkChat.SongRequest
 {
     class FileUnZip
     {
         string CustomLevelPath = Path.Combine(UnityGame.InstallPath, "Beat Saber_Data", "CustomLevels");
-        string filePath = "";
+        string FilePath = "";
+        Loader Loader = new Loader();
 
         public FileUnZip(string songCode)
         {
@@ -21,10 +23,10 @@ namespace ChzzkChat.SongRequest
 
             if (files.Length > 0)
             {
-                filePath = files[0];
+                FilePath = files[0];
                 UnZipFile();
 
-                // 파일 리로드 시켜야함
+                Loader.RefreshSongs();
             }
             else
             {
@@ -36,9 +38,9 @@ namespace ChzzkChat.SongRequest
         {
             try
             {
-                string unZipPath = String.Format($"{filePath.Substring(0, filePath.LastIndexOf(".zip"))}");
-                ZipFile.ExtractToDirectory(filePath, unZipPath);
-                File.Delete(filePath);
+                string unZipPath = String.Format($"{FilePath.Substring(0, FilePath.LastIndexOf(".zip"))}");
+                ZipFile.ExtractToDirectory(FilePath, unZipPath);
+                File.Delete(FilePath);
 
                 GetSongData.Instance.GetFileInfoFromFile(unZipPath);
             }
