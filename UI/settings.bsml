@@ -1,0 +1,11 @@
+<settings-container xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+                    xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
+  <text text='Request Que Settings' italics='true' font-size='6.5' align='Left' size-delta-y='9'/>
+  <checkbox-setting text='Request Que Open' value='requestQueState' hover-hint='Open/Close Request Que' bind-value='true' />
+  <horizontal>
+    <text text='Request Max Count' align='Left' font-size='5'></text>
+    <button text='&lt;' left-pad='8' on-click='onClickRequestMaxCntDown'></button>
+    <text text='~requestMaxCnt' left-pad='8' align='Center' font-size='5'></text>
+    <button text='&gt;' left-pad='2' on-click='onClickRequestMaxCntUp'></button>
+  </horizontal>
+</settings-container>

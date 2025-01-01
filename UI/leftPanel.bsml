@@ -1,0 +1,7 @@
+<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
+  <vertical horizontal-fit='PreferredSize' preferred-width='80'>
+    <checkbox text='Request Que Open' value='requestQueState' hover-hint='Open/Close Request Que' bind-value='true' />
+    <list data='requestList'/>
+  </vertical>
+</bg>

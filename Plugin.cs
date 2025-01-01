@@ -2,13 +2,12 @@
 using IPA;
 using IPA.Config;
 using IPA.Config.Stores;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+using IPA.Loader;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using IPALogger = IPA.Logging.Logger;
+using IPAConfig = IPA.Config.Config;
+using ChzzkChat.Configuration;
+using ChzzkChat.UI;
 
 namespace ChzzkChat
 {
@@ -19,15 +18,11 @@ namespace ChzzkChat
         internal static IPALogger Log { get; private set; }
 
         [Init]
-        /// <summary>
-        /// Called when the plugin is first loaded by IPA (either when the game starts or when the plugin is enabled if it starts disabled).
-        /// [Init] methods that use a Constructor or called before regular methods like InitWithConfig.
-        /// Only use [Init] with one Constructor.
-        /// </summary>
-        public void Init(IPALogger logger)
+        public void Init(IPALogger logger, IPAConfig iPAConfig, PluginMetadata pluginMetadata)
         {
             Instance = this;
             Log = logger;
+
             Log.Info("ChzzkChat initialized.");
         }
 
@@ -49,9 +44,9 @@ namespace ChzzkChat
             Log.Debug("OnApplicationStart");
             new GameObject("ChzzkChatController").AddComponent<ChzzkChatController>();
 
-
             GetChannelInfo channelInfo = new GetChannelInfo();
             ChatListener chatListener = new ChatListener();
+            UIManager.AddSettingsMenu();
 
             _ = chatListener.Init();
         }
@@ -59,6 +54,7 @@ namespace ChzzkChat
         [OnExit]
         public void OnApplicationQuit()
         {
+            UIManager.RemoveSettingsMenu();
             Log.Debug("OnApplicationQuit");
         }
     }

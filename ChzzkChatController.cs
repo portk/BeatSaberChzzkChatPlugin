@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
+using ChzzkChat.UI;
+using BeatSaberMarkupLanguage.Util;
 
 namespace ChzzkChat
 {
@@ -82,6 +77,7 @@ namespace ChzzkChat
         private void OnDestroy()
         {
             Plugin.Log?.Debug($"{name}: OnDestroy()");
+
             if (Instance == this)
                 Instance = null; // This MonoBehaviour is being destroyed, so set the static instance property to null.
 

@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using BeatSaberMarkupLanguage.Settings;
+using ChzzkChat.UI;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Net.WebSockets;
 using System.Text;
@@ -14,7 +16,6 @@ namespace ChzzkChat.Chat
         private readonly string pingMsg = "{\"ver\":\"2\",\"cmd\":0}";
         private readonly string pongMsg = "{\"ver\":\"2\",\"cmd\":10000}";
         private Random rand = new Random();
-        //string connectedMsg;
 
         public ChatListener()
         {
@@ -28,7 +29,7 @@ namespace ChzzkChat.Chat
         public async Task Init()
         {
             GetChannelInfo userInformation = new GetChannelInfo();
-
+            
             try
             {
                 await client.ConnectAsync(uri, CancellationToken.None);
@@ -122,8 +123,6 @@ namespace ChzzkChat.Chat
             await client.SendAsync(bytesToSend, WebSocketMessageType.Text, true, CancellationToken.None);
         }
 
-        // 끝까지 받기 전에 파싱이 시작되서 지금은 인덱싱 방식을 사용했음
-        // 기다리게 바꾸고, Json 파싱으로 바꾸면 지금처럼 딮스를 파고 들어가지 않고 리스트에서 하나씩 꺼내면 됨
         private void ParseChat(string ReceiveString)
         {
             JObject ReceiveObject = JObject.Parse(ReceiveString);

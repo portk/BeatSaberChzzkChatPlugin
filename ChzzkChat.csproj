@@ -44,6 +44,14 @@
     <DisableZipRelease>True</DisableZipRelease>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony, Version=2.10.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Beat Saber\Libs\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="BSML, Version=1.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Beat Saber\Plugins\BSML.dll</HintPath>
+    </Reference>
     <Reference Include="IPA">
       <HintPath>..\ets\BeatSaber-IPA-Reloaded-master\IPA\bin\Debug\netcoreapp3.1\IPA.dll</HintPath>
     </Reference>
@@ -96,6 +104,9 @@
     <Reference Include="UnityEngine.VRModule">
       <HintPath>..\..\..\..\..\Program Files\Unity\Hub\Editor\2021.3.45f1\Editor\Data\Managed\UnityEngine\UnityEngine.VRModule.dll</HintPath>
     </Reference>
+    <Reference Include="Zenject">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Beat Saber\Beat Saber_Data\Managed\Zenject.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Chat\ChatListener.cs" />
@@ -108,6 +119,9 @@
     <Compile Include="SongRequest\GetSongData.cs" />
     <Compile Include="SongRequest\RequestListControl.cs" />
     <Compile Include="SongRequest\SongDownloader.cs" />
+    <Compile Include="UI\LeftPanelController.cs" />
+    <Compile Include="UI\SettingsController.cs" />
+    <Compile Include="UI\UIManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="manifest.json" />
@@ -115,6 +129,8 @@
   <ItemGroup>
     <None Include="Directory.Build.props" Condition="Exists('Directory.Build.props')" />
     <None Include="ChzzkChat.csproj.user" Condition="Exists('ChzzkChat.csproj.user')" />
+    <EmbeddedResource Include="UI\settings.bsml" />
+    <None Include="UI\leftPanel.bsml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BeatSaberModdingTools.Tasks">

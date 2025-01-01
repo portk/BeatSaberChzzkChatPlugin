@@ -5,4 +5,8 @@
 		<ImportBSMTTargets>True</ImportBSMTTargets>
 		<BSMTProjectType>BSIPA</BSMTProjectType>
 	</PropertyGroup>
+  <ItemGroup>
+    <DependsOn Include="BSIPA" Version="^4.2.0"/>
+    <DependsOn Include="BeatSaberMarkupLanguage" Version="^1.12.0"/>
+  </ItemGroup>
 </Project>
