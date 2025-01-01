@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.IO.Compression;
 using SongCore;
+using ChzzkChat.Configuration;
 
 namespace ChzzkChat.SongRequest
 {
@@ -11,10 +12,13 @@ namespace ChzzkChat.SongRequest
         string CustomLevelPath = Path.Combine(UnityGame.InstallPath, "Beat Saber_Data", "CustomLevels");
         string FilePath = "";
         Loader Loader = new Loader();
+        GetSongData getSongData = new GetSongData();
 
         public FileUnZip(string songCode)
         {
             Run(songCode);
+
+            PluginConfig.Instance.Changed();
         }
 
         private void Run(string songCode)
@@ -42,7 +46,7 @@ namespace ChzzkChat.SongRequest
                 ZipFile.ExtractToDirectory(FilePath, unZipPath);
                 File.Delete(FilePath);
 
-                GetSongData.Instance.GetFileInfoFromFile(unZipPath);
+                getSongData.GetFileInfoFromFile(unZipPath);
             }
             catch (Exception ex)
             {

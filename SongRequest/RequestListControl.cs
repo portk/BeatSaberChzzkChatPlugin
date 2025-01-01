@@ -9,6 +9,7 @@ namespace ChzzkChat.SongRequest
     class RequestListControl
     {
         bool isListFull = false;
+        GetSongData getSongData = new GetSongData();
 
         public RequestListControl()
         {
@@ -47,13 +48,15 @@ namespace ChzzkChat.SongRequest
                 Plugin.Log.Info(request.ToString());
 
                 ThreadPool.QueueUserWorkItem(CheckInfo, songCode);
+
+                PluginConfig.Instance.Changed();
             }
         }
 
         public void CheckInfo(object objSongCode)
         {
             string songCode = (string)objSongCode;
-            string songName = GetSongData.Instance.GetFileDataFromWeb(songCode);
+            string songName = getSongData.GetFileDataFromWeb(songCode);
 
             int idx = 0;
             foreach (Request item in PluginConfig.Instance.RequestList)
@@ -77,6 +80,8 @@ namespace ChzzkChat.SongRequest
                 Plugin.Log.Info($"{songCode} is Call Off due to Song information Not Found.");
                 DeclineRequest(idx);
             }
+
+            PluginConfig.Instance.Changed();
         }
 
         public void AcceptRequest(int idx)
@@ -86,7 +91,9 @@ namespace ChzzkChat.SongRequest
             string[] dirArray = Directory.GetDirectories(CustomLevel, String.Format($"{PluginConfig.Instance.RequestList[idx].SongCode} *"));
             if (dirArray.Length > 0)
             {
-                GetSongData.Instance.GetFileInfoFromFile(dirArray[0]);
+                getSongData.GetFileInfoFromFile(dirArray[0]);
+
+                PluginConfig.Instance.Changed();
             }
             else
             {
@@ -111,6 +118,8 @@ namespace ChzzkChat.SongRequest
             PluginConfig.Instance.RequestList.RemoveAt(idx);
 
             if (PluginConfig.Instance.RequestList.Count <= PluginConfig.Instance.RequestMaxCount) isListFull = false;
+
+            PluginConfig.Instance.Changed();
         }
     }
 }

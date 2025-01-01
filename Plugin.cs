@@ -6,7 +6,6 @@ using IPA.Loader;
 using UnityEngine;
 using IPALogger = IPA.Logging.Logger;
 using IPAConfig = IPA.Config.Config;
-using ChzzkChat.Configuration;
 using ChzzkChat.UI;
 
 namespace ChzzkChat
@@ -44,10 +43,10 @@ namespace ChzzkChat
             Log.Debug("OnApplicationStart");
             new GameObject("ChzzkChatController").AddComponent<ChzzkChatController>();
 
-            GetChannelInfo channelInfo = new GetChannelInfo();
-            ChatListener chatListener = new ChatListener();
             UIManager.AddSettingsMenu();
             UIManager.AddLeftPanel();
+            GetChannelInfo channelInfo = new GetChannelInfo();
+            ChatListener chatListener = new ChatListener();
 
             _ = chatListener.Init();
         }

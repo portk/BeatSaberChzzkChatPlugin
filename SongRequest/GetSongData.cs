@@ -8,8 +8,6 @@ namespace ChzzkChat.SongRequest
 {
     class GetSongData 
     {
-        public static GetSongData Instance { get; set; }
-
         public string GetFileDataFromWeb(string songCode)
         {
             WebClient webClient = new WebClient();
