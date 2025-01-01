@@ -122,6 +122,7 @@
     <Compile Include="UI\LeftPanelController.cs" />
     <Compile Include="UI\SettingsController.cs" />
     <Compile Include="UI\UIManager.cs" />
+    <Compile Include="Util\RequestListUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="manifest.json" />
@@ -130,7 +131,7 @@
     <None Include="Directory.Build.props" Condition="Exists('Directory.Build.props')" />
     <None Include="ChzzkChat.csproj.user" Condition="Exists('ChzzkChat.csproj.user')" />
     <EmbeddedResource Include="UI\settings.bsml" />
-    <None Include="UI\leftPanel.bsml" />
+    <EmbeddedResource Include="UI\leftPanel.bsml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BeatSaberModdingTools.Tasks">

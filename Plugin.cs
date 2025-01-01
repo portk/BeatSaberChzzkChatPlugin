@@ -47,6 +47,7 @@ namespace ChzzkChat
             GetChannelInfo channelInfo = new GetChannelInfo();
             ChatListener chatListener = new ChatListener();
             UIManager.AddSettingsMenu();
+            UIManager.AddLeftPanel();
 
             _ = chatListener.Init();
         }
@@ -55,6 +56,8 @@ namespace ChzzkChat
         public void OnApplicationQuit()
         {
             UIManager.RemoveSettingsMenu();
+            UIManager.RemoveLeftPanel();
+
             Log.Debug("OnApplicationQuit");
         }
     }

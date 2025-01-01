@@ -3,6 +3,7 @@ using IPA.Config.Stores;
 using System.Collections.Generic;
 using IPA.Config.Stores.Attributes;
 using IPA.Config.Stores.Converters;
+using UnityEngine.UIElements;
 
 [assembly: InternalsVisibleTo(GeneratedStore.AssemblyVisibilityTarget)]
 namespace ChzzkChat.Configuration
@@ -34,7 +35,9 @@ namespace ChzzkChat.Configuration
         public virtual bool RequestQueOpen { get; set; } = true;
         public virtual string RequestWord { get; set; } = "";
         public virtual int RequestMaxCount { get; set; } = 5;
-        [UseConverter(typeof(ListConverter<string>))]
+
+        [NonNullable]
+        [UseConverter(typeof(ListConverter<Request>))]
         public virtual List<Request> RequestList { get; set; } = new List<Request>();
 
         /// <summary>

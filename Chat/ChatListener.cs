@@ -1,4 +1,6 @@
 ﻿using BeatSaberMarkupLanguage.Settings;
+using ChzzkChat.Configuration;
+using ChzzkChat.SongRequest;
 using ChzzkChat.UI;
 using Newtonsoft.Json.Linq;
 using System;
@@ -16,6 +18,7 @@ namespace ChzzkChat.Chat
         private readonly string pingMsg = "{\"ver\":\"2\",\"cmd\":0}";
         private readonly string pongMsg = "{\"ver\":\"2\",\"cmd\":10000}";
         private Random rand = new Random();
+        private RequestListControl requestListControl = new RequestListControl();
 
         public ChatListener()
         {
@@ -93,6 +96,7 @@ namespace ChzzkChat.Chat
                 {
                     Plugin.Log.Error(serverMsg);
                     Plugin.Log.Error(e.Message);
+                    Plugin.Log.Error(e.StackTrace);
                 }
             }
 
@@ -140,6 +144,25 @@ namespace ChzzkChat.Chat
                         string Msg = (string)chat["msg"];
 
                         Plugin.Log.Info($"{Nickname} {Msg}");
+
+                        if(PluginConfig.Instance.RequestQueOpen && Msg.StartsWith($"{PluginConfig.Instance.RequestWord} "))
+                        {
+                            Msg = Msg.Remove(0, PluginConfig.Instance.RequestWord.Length + 1);
+
+                            if (Msg.Length > 0)
+                            {
+                                int idx = Msg.IndexOf(" ");
+
+                                if (idx == -1)
+                                {
+                                    ThreadingGetRequest(Msg);
+                                }
+                                else
+                                {
+                                    ThreadingGetRequest(Msg.Substring(0, idx));
+                                }
+                            }
+                        }
                     }
                     // anonymous donate
                     else if (IsAnonymous == true)
@@ -181,7 +204,8 @@ namespace ChzzkChat.Chat
 
         private void ThreadingGetRequest(object songCode)
         {
-            //requestListControl.GetRequest((string)songCode);
+            Plugin.Log.Info((string)songCode);
+            requestListControl.GetRequest((string)songCode);
         }
     }
 }
