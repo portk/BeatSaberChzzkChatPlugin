@@ -3,7 +3,8 @@ using IPA.Config.Stores;
 using System.Collections.Generic;
 using IPA.Config.Stores.Attributes;
 using IPA.Config.Stores.Converters;
-using UnityEngine.UIElements;
+using ChzzkChat.UI;
+using UnityEngine;
 using System.ComponentModel;
 
 [assembly: InternalsVisibleTo(GeneratedStore.AssemblyVisibilityTarget)]
@@ -31,10 +32,10 @@ namespace ChzzkChat.Configuration
     {
         public static PluginConfig Instance { get; set; }
 
-        public virtual string ChannelId { get; set; } = "";// Must be 'virtual' if you want BSIPA to detect a value change and save the config automatically.
+        public virtual string ChannelId { get; set; } = "";
 
         public virtual bool RequestQueOpen { get; set; } = true;
-        public virtual string RequestWord { get; set; } = "";
+        public virtual string RequestCommand { get; set; } = "";
         public virtual int RequestMaxCount { get; set; } = 5;
 
         [NonNullable]

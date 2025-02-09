@@ -1,4 +1,5 @@
 ﻿using ChzzkChat.Configuration;
+using ChzzkChat.UI;
 using IPA.Utilities;
 using System;
 using System.IO;
@@ -30,12 +31,12 @@ namespace ChzzkChat.SongRequest
         {
             if (CheckList(songCode))
             {
-                Plugin.Log.Info(String.Format($"{songCode} Already Requested."));
+                Plugin.Log.Debug(String.Format($"{songCode} Already Requested."));
 
             }
             else if (isListFull)
             {
-                Plugin.Log.Info(String.Format("List is Full."));
+                Plugin.Log.Debug(String.Format("List is Full."));
             }
             else
             {
@@ -45,7 +46,7 @@ namespace ChzzkChat.SongRequest
 
                 PluginConfig.Instance.RequestList.Add(request);
 
-                Plugin.Log.Info(request.ToString());
+                Plugin.Log.Debug(request.ToString());
 
                 ThreadPool.QueueUserWorkItem(CheckInfo, songCode);
 
@@ -77,7 +78,7 @@ namespace ChzzkChat.SongRequest
             }
             else
             {
-                Plugin.Log.Info($"{songCode} is Call Off due to Song information Not Found.");
+                Plugin.Log.Debug($"{songCode} is Call Off due to Song information Not Found.");
                 DeclineRequest(idx);
             }
 

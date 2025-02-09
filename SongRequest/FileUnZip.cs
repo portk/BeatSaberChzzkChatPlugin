@@ -4,6 +4,7 @@ using System.IO;
 using System.IO.Compression;
 using SongCore;
 using ChzzkChat.Configuration;
+using ChzzkChat.UI;
 
 namespace ChzzkChat.SongRequest
 {

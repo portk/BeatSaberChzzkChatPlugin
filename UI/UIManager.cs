@@ -1,17 +1,27 @@
 ﻿using BeatSaberMarkupLanguage.GameplaySetup;
 using BeatSaberMarkupLanguage.Settings;
+using UnityEngine;
 
 namespace ChzzkChat.UI
 {
     internal class UIManager
     {
-        private static SettingsController SettingsMenuInstance { get; set; }
-        private static LeftPanelController LeftPanelControllerInstance { get; set; }
+        public static UIManager Instance = new UIManager();
 
-        public static void AddSettingsMenu() => BSMLSettings.instance.AddSettingsMenu(nameof(ChzzkChat), "ChzzkChat.UI.settings.bsml", new SettingsController());
-        public static void RemoveSettingsMenu() => BSMLSettings.instance.RemoveSettingsMenu(SettingsMenuInstance);
+        private SettingsController SettingsMenuInstance { get; set; }
+        public LeftPanelController LeftPanelControllerInstance { get; set; }
 
-        public static void AddLeftPanel() => GameplaySetup.instance.AddTab(nameof(ChzzkChat), "ChzzkChat.UI.leftPanel.bsml", new LeftPanelController());
-        public static void RemoveLeftPanel() => GameplaySetup.instance.RemoveTab(nameof(ChzzkChat));
+        public UIManager()
+        {
+            SettingsMenuInstance = new SettingsController();
+            LeftPanelControllerInstance = new LeftPanelController();
+        }
+
+        public void AddSettingsMenu() => BSMLSettings.instance.AddSettingsMenu(nameof(ChzzkChat), "ChzzkChat.UI.settings.bsml", SettingsMenuInstance);
+        public void AddLeftPanel() => GameplaySetup.instance.AddTab(nameof(ChzzkChat), "ChzzkChat.UI.leftPanel.bsml", LeftPanelControllerInstance);
+
+        public void RemoveSettingsMenu() => BSMLSettings.instance.RemoveSettingsMenu(SettingsMenuInstance);
+        public void RemoveLeftPanel() => GameplaySetup.instance.RemoveTab(nameof(ChzzkChat));
     }
+    
 }

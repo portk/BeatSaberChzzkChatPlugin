@@ -1,14 +1,16 @@
 <bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
     xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
-  <vertical preferred-width='80' child-expand-height='false' spacing='2' pad-top='2'>
+  <vertical width='80' child-expand-height='false' spacing='10' pad='2'>
     <bool-setting text='Request Que Open' value='requestQueState' hover-hint='Open/Close Request Que' apply-on-change='true' />
-    <horizontal>
+    <horizontal pad ='1'>
       <vertical>
-        <page-button click-event='request-list#PageUp' dirction='Up' pref-width='50' pref-hight='5' />
-        <horizontal background='round-rect-panel' bg-color='#000000AA'>
-          <list data='request-list' select-cell='request-click' list-style='Simple' list-width='50' visible-cell='5'/>
-        </horizontal>
-        <page-button click-event='request-list#PageDown' dirction='Down' pref-width='50' pref-hight='5' />
+        <page-button click-event='request-list#PageUp' dirction='Up' width='50' hight='5' />
+          <custom-list id='request-list' contents='request-list-data' select-cell='request-click' list-width='50'>
+            <horizontal bg='round-rect-panel' bg-color='#000000AA' horizontal-fit='Unconstrained' pad='1'>
+              <text text='~SongName' align='MidlineLeft' font-size='3'/>
+            </horizontal>
+          </custom-list>
+        <page-button click-event='request-list#PageDown' dirction='Down' width='50' hight='5' />
       </vertical>
       <vertical>
         <button text='Accept' on-click='on-click-accept-btn'/>

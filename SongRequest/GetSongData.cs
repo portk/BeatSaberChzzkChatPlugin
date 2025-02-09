@@ -52,7 +52,7 @@ namespace ChzzkChat.SongRequest
                 result["LevelAuthorName"] = (string)o["_levelAuthorName"];
             }
 
-            Plugin.Log.Info($"{result["SongName"]} {result["SongSubName"]}\n{result["SongAuthorName"]} [{result["LevelAuthorName"]}]");
+            Plugin.Log.Debug($"{result["SongName"]} {result["SongSubName"]}\n{result["SongAuthorName"]} [{result["LevelAuthorName"]}]");
 
             return result;
         }

@@ -122,7 +122,6 @@
     <Compile Include="UI\LeftPanelController.cs" />
     <Compile Include="UI\SettingsController.cs" />
     <Compile Include="UI\UIManager.cs" />
-    <Compile Include="Util\RequestListUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="manifest.json" />

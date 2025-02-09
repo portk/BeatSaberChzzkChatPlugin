@@ -2,18 +2,17 @@
 using BeatSaberMarkupLanguage.ViewControllers;
 using ChzzkChat.Configuration;
 using ChzzkChat.SongRequest;
-using ChzzkChat.Util;
 using HMUI;
 using System;
 using System.Collections.Generic;
-using static BeatSaberMarkupLanguage.Components.CustomListTableData;
+using BeatSaberMarkupLanguage.Components;
 
 namespace ChzzkChat.UI
 {
     internal class LeftPanelController : BSMLAutomaticViewController
     {
         private RequestListControl requestListControl = new RequestListControl();
-
+        
         [UIValue("requestQueState")]
         public bool RequestQueState
         {
@@ -25,21 +24,41 @@ namespace ChzzkChat.UI
             }
         }
 
-        [UIValue("request-list")]
-        public IList<CustomCellInfo> requestList
+        #region RequestList
+        [UIComponent("request-list")]
+        public CustomCellListTableData customRequestList = null;
+        public Action<Request> clickedRequest;
+
+        private int selectedIdx = -1;
+        bool reloadData = true;
+
+        [UIValue("request-list-data")]
+        public List<object> requestListData
         {
-            get => RequestListUtil.RequestListToCustomCellInfoList();
+            get
+            {
+                List<object> list = new List<object>();
+
+                foreach (var i in PluginConfig.Instance.RequestList)
+                {
+                    list.Add((object)i);
+                }
+
+                return list;
+            }
         }
 
-        public Action<Request> clickedRequest;
-        private int selectedIdx = -1;
-
         [UIAction("request-click")]
-        private void RequestClick(TableView tableVeiw, int idx)
+        void RequestClick(TableView tableVeiw, Request request)
         {
-            Request request = PluginConfig.Instance.RequestList[idx];
-            clickedRequest?.Invoke(request);
-            selectedIdx = idx;
+            if (request.SongName == null)
+            {
+                tableVeiw.ReloadData();
+            }
+
+            selectedIdx = requestListData.FindIndex(song => song.Equals(request));
+
+            Plugin.Log.Debug($"{selectedIdx}");
         }
 
         [UIAction("on-click-accept-btn")]
@@ -48,8 +67,8 @@ namespace ChzzkChat.UI
             if (selectedIdx > -1)
             {
                 requestListControl.AcceptRequest(selectedIdx);
-                selectedIdx = -1;
             }
+
         }
 
         [UIAction("on-click-decline-btn")]
@@ -59,7 +78,31 @@ namespace ChzzkChat.UI
             {
                 requestListControl.DeclineRequest(selectedIdx);
                 selectedIdx = -1;
+
+                NotifyPropertyChanged();
+                customRequestList.tableView.ReloadData();
             }
         }
+
+        public void Update()
+        {
+            if (requestListData == null || customRequestList.tableView == null)
+            {
+                return;
+            }
+
+            if (reloadData)
+            {
+                customRequestList.data = requestListData;
+                customRequestList.tableView.ReloadData();
+            }
+
+            if (selectedIdx > -1)
+            {
+                customRequestList.tableView.SelectCellWithIdx(selectedIdx);
+            }
+        }
+
+        #endregion RequestList
     }
 }

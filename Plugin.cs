@@ -10,7 +10,7 @@ using ChzzkChat.UI;
 
 namespace ChzzkChat
 {
-    [Plugin(RuntimeOptions.SingleStartInit)]
+    [Plugin(RuntimeOptions.DynamicInit)]
     public class Plugin
     {
         internal static Plugin Instance { get; private set; }
@@ -40,12 +40,11 @@ namespace ChzzkChat
         [OnStart]
         public void OnApplicationStart()
         {
-            Log.Debug("OnApplicationStart");
+            Log.Debug("OnChzzkChatStart");
             new GameObject("ChzzkChatController").AddComponent<ChzzkChatController>();
 
-            UIManager.AddSettingsMenu();
-            UIManager.AddLeftPanel();
-            GetChannelInfo channelInfo = new GetChannelInfo();
+            UIManager.Instance.AddSettingsMenu();
+            UIManager.Instance.AddLeftPanel();
             ChatListener chatListener = new ChatListener();
 
             _ = chatListener.Init();
@@ -54,10 +53,10 @@ namespace ChzzkChat
         [OnExit]
         public void OnApplicationQuit()
         {
-            UIManager.RemoveSettingsMenu();
-            UIManager.RemoveLeftPanel();
+            UIManager.Instance.RemoveSettingsMenu();
+            UIManager.Instance.RemoveLeftPanel();
 
-            Log.Debug("OnApplicationQuit");
+            Log.Debug("OnChzzkChatQuit");
         }
     }
 }

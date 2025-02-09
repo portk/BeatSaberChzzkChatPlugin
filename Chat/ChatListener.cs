@@ -1,5 +1,4 @@
-﻿using BeatSaberMarkupLanguage.Settings;
-using ChzzkChat.Configuration;
+﻿using ChzzkChat.Configuration;
 using ChzzkChat.SongRequest;
 using ChzzkChat.UI;
 using Newtonsoft.Json.Linq;
@@ -43,7 +42,7 @@ namespace ChzzkChat.Chat
                     new JProperty("svcid", "game"),
                     new JProperty("cid", userInformation.chatChannelId),
                     new JProperty("bdy", new JObject(
-                        new JProperty("uid", userInformation.uId == "" ? null : userInformation.uId),
+                        new JProperty("uid", userInformation.uId == "" ? "" : userInformation.uId),
                         new JProperty("devType", 2001),
                         new JProperty("accTkn", userInformation.accessToken),
                         new JProperty("auth", (userInformation.uId != "") ? "SEND" : "READ")
@@ -58,7 +57,6 @@ namespace ChzzkChat.Chat
                 await client.SendAsync(bytesToSend, WebSocketMessageType.Text, true, CancellationToken.None);
 
                 ThreadPool.QueueUserWorkItem(Listen);
-                //ThreadPool.QueueUserWorkItem(Send);
             }
             catch (Exception e)
             {
@@ -102,20 +100,6 @@ namespace ChzzkChat.Chat
 
         }
 
-        // 미구현
-        // 사용자가 채팅을 입력해서 보내는 부분
-        // 따로 만들고 떼온거라 서식이 이 프로그램에 알맞지 않다.
-        // 폼에서 입력받고 전송의사를 받아서 발송하는 형태로 변경해야함
-        //private void Send(Object obj)
-        //{
-        //    string msg = (string)obj;
-        //    if (msg != null)
-        //    {
-        //        ArraySegment<byte> bytesToSend = new ArraySegment<byte>(Encoding.UTF8.GetBytes(msg));
-        //        client.SendAsync(bytesToSend, WebSocketMessageType.Text, true, CancellationToken.None);
-        //    }
-        //}
-
         public async void CloseClient()
         {
             await client.CloseOutputAsync(WebSocketCloseStatus.Empty, null, CancellationToken.None);
@@ -143,11 +127,11 @@ namespace ChzzkChat.Chat
                         string Nickname = (string)JObject.Parse((string)chat["profile"])["nickname"];
                         string Msg = (string)chat["msg"];
 
-                        Plugin.Log.Info($"{Nickname} {Msg}");
+                        Plugin.Log.Debug($"{Nickname} {Msg}");
 
-                        if(PluginConfig.Instance.RequestQueOpen && Msg.StartsWith($"{PluginConfig.Instance.RequestWord} "))
+                        if(PluginConfig.Instance.RequestQueOpen && Msg.StartsWith($"{PluginConfig.Instance.RequestCommand} "))
                         {
-                            Msg = Msg.Remove(0, PluginConfig.Instance.RequestWord.Length + 1);
+                            Msg = Msg.Remove(0, PluginConfig.Instance.RequestCommand.Length + 1);
 
                             if (Msg.Length > 0)
                             {
@@ -170,7 +154,7 @@ namespace ChzzkChat.Chat
                         string Msg = (string)chat["msg"];
                         int PayAmount = (int)JObject.Parse((string)chat["extras"])["payAmount"];
 
-                        Plugin.Log.Info($"anonymous donate {PayAmount}w {Msg}");
+                        Plugin.Log.Debug($"anonymous donate {PayAmount}w {Msg}");
                     }
                     // donate
                     else if (IsAnonymous == false)
@@ -179,7 +163,7 @@ namespace ChzzkChat.Chat
                         string Msg = (string)chat["msg"];
                         int PayAmount = (int)JObject.Parse((string)chat["extras"])["payAmount"];
 
-                        Plugin.Log.Info($"{Nickname} donate {PayAmount} {Msg}");
+                        Plugin.Log.Debug($"{Nickname} donate {PayAmount} {Msg}");
                     }
                 }
             }
@@ -194,7 +178,7 @@ namespace ChzzkChat.Chat
 
                 if (totalPayAmount != null)
                 {
-                    Plugin.Log.Info(
+                    Plugin.Log.Debug(
                         $"Mission {missionText} |{totalPayAmount}w| time:{durationTime} {nickname}(and {participationCount} others)"
                         );
                 }
@@ -204,7 +188,7 @@ namespace ChzzkChat.Chat
 
         private void ThreadingGetRequest(object songCode)
         {
-            Plugin.Log.Info((string)songCode);
+            Plugin.Log.Debug((string)songCode);
             requestListControl.GetRequest((string)songCode);
         }
     }
