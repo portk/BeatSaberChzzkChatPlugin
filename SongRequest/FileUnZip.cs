@@ -48,6 +48,8 @@ namespace ChzzkChat.SongRequest
                 File.Delete(FilePath);
 
                 getSongData.GetFileInfoFromFile(unZipPath);
+
+                SongCore.Loader.Instance?.RefreshSongs(false);
             }
             catch (Exception ex)
             {

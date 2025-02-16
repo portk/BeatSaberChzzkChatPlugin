@@ -57,8 +57,15 @@ namespace ChzzkChat.UI
             }
 
             selectedIdx = requestListData.FindIndex(song => song.Equals(request));
+            customRequestList.tableView.SelectCellWithIdx(selectedIdx);
+
+            ListUpdate();
 
             Plugin.Log.Debug($"{selectedIdx}");
+            foreach (var item in requestListData)
+            {
+                Plugin.Log.Debug($"{(Request)item}");
+            }
         }
 
         [UIAction("on-click-accept-btn")]
@@ -84,22 +91,23 @@ namespace ChzzkChat.UI
             }
         }
 
-        public void Update()
+        public void ListUpdate()
         {
             if (requestListData == null || customRequestList.tableView == null)
             {
                 return;
             }
 
-            if (reloadData)
-            {
-                customRequestList.data = requestListData;
-                customRequestList.tableView.ReloadData();
-            }
-
             if (selectedIdx > -1)
             {
                 customRequestList.tableView.SelectCellWithIdx(selectedIdx);
+            }
+
+            if (reloadData)
+            {
+                customRequestList.data = requestListData;
+
+                customRequestList.tableView?.Invoke("ReloadData",0.1f);
             }
         }
 

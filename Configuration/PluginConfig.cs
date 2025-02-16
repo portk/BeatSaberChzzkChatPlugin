@@ -48,6 +48,7 @@ namespace ChzzkChat.Configuration
         public virtual void OnReload()
         {
             // Do stuff after config is read from disk.
+
         }
 
         /// <summary>
@@ -56,6 +57,7 @@ namespace ChzzkChat.Configuration
         public virtual void Changed()
         {
             // Do stuff when the config is changed.
+            UIManager.Instance?.UpdateList();
         }
 
         /// <summary>

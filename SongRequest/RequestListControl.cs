@@ -1,5 +1,4 @@
 ﻿using ChzzkChat.Configuration;
-using ChzzkChat.UI;
 using IPA.Utilities;
 using System;
 using System.IO;
@@ -32,7 +31,6 @@ namespace ChzzkChat.SongRequest
             if (CheckList(songCode))
             {
                 Plugin.Log.Debug(String.Format($"{songCode} Already Requested."));
-
             }
             else if (isListFull)
             {
@@ -75,6 +73,8 @@ namespace ChzzkChat.SongRequest
                 Request temp = PluginConfig.Instance.RequestList[idx];
                 temp.SongName = songName;
                 PluginConfig.Instance.RequestList[idx] = temp;
+
+                PluginConfig.Instance.Changed();
             }
             else
             {
@@ -111,6 +111,8 @@ namespace ChzzkChat.SongRequest
 
                     new SongDownloader(idx);
                 }
+
+
             }
         }
 
