@@ -1,8 +1,7 @@
 ﻿using ChzzkChat.Configuration;
-using IPA.Utilities;
 using System;
-using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace ChzzkChat.SongRequest
 {
@@ -12,14 +11,11 @@ namespace ChzzkChat.SongRequest
         private readonly string _baseUrl = "https://api.beatsaver.com/download/key/";
         private Uri downloadUri;
         public int progress { get; set; } = 0;
-        private readonly string CustomLevelPath = Path.Combine(UnityGame.InstallPath, "Beat Saber_Data", "CustomLevels");
         Request request;
 
         public SongDownloader(int idx)
         {
             request = PluginConfig.Instance.RequestList[idx];
-            
-            // Set Download Url
             downloadUri = new Uri(String.Format($"{_baseUrl}{request.SongCode}"));
 
             SetWebClientEvents();
@@ -30,6 +26,7 @@ namespace ChzzkChat.SongRequest
         {
             webClient.DownloadProgressChanged += (s, e) =>
             {
+                // it fill request background color green;
                 progress = e.ProgressPercentage;
             };
 
@@ -43,7 +40,7 @@ namespace ChzzkChat.SongRequest
         {
             try
             {
-                webClient.DownloadFileAsync(downloadUri, String.Format($@"{CustomLevelPath}/{request.SongName}.zip"));
+                webClient.DownloadFileAsync(downloadUri, String.Format($@"{CustomLevelPathHelper.customLevelsDirectoryPath}/{request.SongName}.zip"));
             }
             catch (Exception ex)
             {

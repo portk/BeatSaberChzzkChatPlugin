@@ -1,11 +1,12 @@
 # BeatSaberChzzkChatPlugin
 ChzzkChatPlugin for BeatSaber
 
-## Not Completed
+## Can Use. But Not Completed
+
 ### to do list
 - make floating UI and chat show here -> hold
+- imoji parsing -> hold. make with above thing.
 - make requested song log data
-- select song when accept request -> can refresh song list. have to make select song.
-- imoji parsing
+- song download bar -> On now, No information in game until refresh
 - chzzk api is generated so need connect here
 - and something more...

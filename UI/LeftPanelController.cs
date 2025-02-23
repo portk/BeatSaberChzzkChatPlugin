@@ -6,6 +6,7 @@ using HMUI;
 using System;
 using System.Collections.Generic;
 using BeatSaberMarkupLanguage.Components;
+using System.Threading;
 
 namespace ChzzkChat.UI
 {
@@ -51,21 +52,10 @@ namespace ChzzkChat.UI
         [UIAction("request-click")]
         void RequestClick(TableView tableVeiw, Request request)
         {
-            if (request.SongName == null)
-            {
-                tableVeiw.ReloadData();
-            }
-
             selectedIdx = requestListData.FindIndex(song => song.Equals(request));
             customRequestList.tableView.SelectCellWithIdx(selectedIdx);
 
             ListUpdate();
-
-            Plugin.Log.Debug($"{selectedIdx}");
-            foreach (var item in requestListData)
-            {
-                Plugin.Log.Debug($"{(Request)item}");
-            }
         }
 
         [UIAction("on-click-accept-btn")]
@@ -75,7 +65,6 @@ namespace ChzzkChat.UI
             {
                 requestListControl.AcceptRequest(selectedIdx);
             }
-
         }
 
         [UIAction("on-click-decline-btn")]

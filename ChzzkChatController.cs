@@ -33,14 +33,6 @@ namespace ChzzkChat
         }
 
         /// <summary>
-        /// Called every frame after every other enabled script's Update().
-        /// </summary>
-        private void LateUpdate()
-        {
-            
-        }
-
-        /// <summary>
         /// Called when the script is being destroyed.
         /// </summary>
         private void OnDestroy()

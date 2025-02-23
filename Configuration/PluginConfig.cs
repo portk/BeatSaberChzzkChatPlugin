@@ -35,7 +35,7 @@ namespace ChzzkChat.Configuration
         public virtual string ChannelId { get; set; } = "";
 
         public virtual bool RequestQueOpen { get; set; } = true;
-        public virtual string RequestCommand { get; set; } = "";
+        public virtual string RequestCommand { get; set; } = "!bsr";
         public virtual int RequestMaxCount { get; set; } = 5;
 
         [NonNullable]

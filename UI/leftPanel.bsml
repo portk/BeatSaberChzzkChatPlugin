@@ -14,7 +14,7 @@
       </vertical>
       <vertical>
         <button text='Accept' on-click='on-click-accept-btn'/>
-        <button text='Decline' on-click='on-click-decline-btn'/>
+        <button text='Delete' on-click='on-click-decline-btn'/>
       </vertical>
     </horizontal>
   </vertical>

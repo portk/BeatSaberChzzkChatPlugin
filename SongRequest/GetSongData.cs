@@ -33,28 +33,5 @@ namespace ChzzkChat.SongRequest
                 return fileName;
             }
         }
-
-        public JObject GetFileInfoFromFile(string fileDirectory)
-        {
-            JObject result = new JObject(
-                new JProperty("SongName",""),
-                new JProperty("SongSubName", ""),
-                new JProperty("SongAuthorName", ""),
-                new JProperty("LevelAuthorName", "")
-                );
-
-            using (StreamReader reader = File.OpenText($@"{fileDirectory}\info.dat"))
-            {
-                JObject o = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
-                result["SongName"] = (string)o["_songName"];
-                result["SongSubName"] = (string)o["_songSubName"];
-                result["SongAuthorName"] = (string)o["_songAuthorName"];
-                result["LevelAuthorName"] = (string)o["_levelAuthorName"];
-            }
-
-            Plugin.Log.Debug($"{result["SongName"]} {result["SongSubName"]}\n{result["SongAuthorName"]} [{result["LevelAuthorName"]}]");
-
-            return result;
-        }
     }
 }

@@ -21,8 +21,13 @@ namespace ChzzkChat.Chat
 
         public ChatListener()
         {
-            ThreadPool.SetMinThreads(1, 1);
-            ThreadPool.SetMaxThreads(5, 5);
+            int workerThreads = 1, completionPortThreads = 1;
+
+            ThreadPool.GetMaxThreads(out workerThreads, out completionPortThreads);
+            ThreadPool.SetMinThreads(workerThreads+1, completionPortThreads+1);
+            ThreadPool.GetMinThreads(out workerThreads, out completionPortThreads);
+            ThreadPool.SetMaxThreads(workerThreads+5, completionPortThreads+5);
+
 
             int id = rand.Next(1, 11);
             uri = new Uri($"wss://kr-ss{id}.chat.naver.com/chat");
@@ -87,14 +92,13 @@ namespace ChzzkChat.Chat
                     if (serverMsg == pingMsg) Send(pongMsg);
                     else
                     {
-                            ParseChat(serverMsg);
+                        ThreadPool.QueueUserWorkItem(ParseChat, serverMsg);
                     }
                 }
                 catch (Exception e)
                 {
                     Plugin.Log.Error(serverMsg);
                     Plugin.Log.Error(e.Message);
-                    Plugin.Log.Error(e.StackTrace);
                 }
             }
 
@@ -111,9 +115,9 @@ namespace ChzzkChat.Chat
             await client.SendAsync(bytesToSend, WebSocketMessageType.Text, true, CancellationToken.None);
         }
 
-        private void ParseChat(string ReceiveString)
+        private void ParseChat(object ReceiveString)
         {
-            JObject ReceiveObject = JObject.Parse(ReceiveString);
+            JObject ReceiveObject = JObject.Parse((string)ReceiveString);
 
             if (ReceiveObject["bdy"].Type == JTokenType.Array)
             {
@@ -137,13 +141,14 @@ namespace ChzzkChat.Chat
                             {
                                 int idx = Msg.IndexOf(" ");
 
+                                // prevent like !bsr 1 hi! -> read 1
                                 if (idx == -1)
                                 {
-                                    ThreadingGetRequest(Msg);
+                                    ThreadPool.QueueUserWorkItem(ThreadingGetRequest,Msg);
                                 }
                                 else
                                 {
-                                    ThreadingGetRequest(Msg.Substring(0, idx));
+                                    ThreadPool.QueueUserWorkItem(ThreadingGetRequest, Msg);
                                 }
                             }
                         }
@@ -188,7 +193,6 @@ namespace ChzzkChat.Chat
 
         private void ThreadingGetRequest(object songCode)
         {
-            Plugin.Log.Debug((string)songCode);
             requestListControl.GetRequest((string)songCode);
         }
     }
