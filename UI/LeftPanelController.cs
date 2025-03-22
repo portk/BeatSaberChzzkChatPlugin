@@ -40,9 +40,12 @@ namespace ChzzkChat.UI
             {
                 List<object> list = new List<object>();
 
-                foreach (var i in PluginConfig.Instance.RequestList)
+                if (PluginConfig.Instance != null)
                 {
-                    list.Add((object)i);
+                    foreach (var i in PluginConfig.Instance.RequestList)
+                    {
+                        list.Add((object)i);
+                    }
                 }
 
                 return list;
@@ -82,7 +85,7 @@ namespace ChzzkChat.UI
 
         public void ListUpdate()
         {
-            if (requestListData == null || customRequestList.tableView == null)
+            if (requestListData == null || customRequestList?.tableView == null)
             {
                 return;
             }

@@ -4,13 +4,11 @@
     <bool-setting text='Request Que Open' value='requestQueState' hover-hint='Open/Close Request Que' apply-on-change='true' />
     <horizontal pad ='1'>
       <vertical>
-        <page-button click-event='request-list#PageUp' dirction='Up' width='50' hight='5' />
-          <custom-list id='request-list' contents='request-list-data' select-cell='request-click' list-width='50'>
-            <horizontal bg='round-rect-panel' bg-color='#000000AA' horizontal-fit='Unconstrained' pad='1'>
-              <text text='~SongName' align='MidlineLeft' font-size='3'/>
-            </horizontal>
-          </custom-list>
-        <page-button click-event='request-list#PageDown' dirction='Down' width='50' hight='5' />
+        <custom-list id='request-list' contents='request-list-data' clickable-cells='true' select-cell='request-click' list-width='50' stick-scrolling="true" show-scrollbar="true">
+          <horizontal bg='round-rect-panel' horizontal-fit='Unconstrained' pad='1'>
+            <text text='~SongName' align='MidlineLeft' font-size='3'/>
+          </horizontal>
+        </custom-list>
       </vertical>
       <vertical>
         <button text='Accept' on-click='on-click-accept-btn'/>
